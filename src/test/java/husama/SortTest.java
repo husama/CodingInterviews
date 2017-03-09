@@ -46,4 +46,12 @@ public class SortTest extends TestCase{
             System.out.print(integer+" ");
         }
     }
+
+    public void testHeapSort() {
+        Integer[] test = {12,3,4,190,3,44,77};
+        Sort.heapSort(test);
+        for(Integer integer : test) {
+            System.out.print(integer+" ");
+        }
+    }
 }

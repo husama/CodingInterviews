@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Sort {
 
-    public static <T extends Comparable> void insertionSort(T[] a) {
+    public static <T extends Comparable<T>> void insertionSort(T[] a) {
         T temp;
         int i, j;
         for(i = 1; i < a.length; i++) {
@@ -19,7 +19,7 @@ public class Sort {
         }
     }
 
-    public static <T extends Comparable> void bubbleSort(T[] a) {
+    public static <T extends Comparable<T>> void bubbleSort(T[] a) {
         T temp;
         for(int i = a.length - 1; i >= 0; i--) {
             for(int j = 0; j < i; j++) {
@@ -32,7 +32,7 @@ public class Sort {
         }
     }
 
-    public static <T extends Comparable> void bubbleSort2(T[] a) {
+    public static <T extends Comparable<T>> void bubbleSort2(T[] a) {
         int bound, t;
         bound = a.length - 1;
         T temp;
@@ -50,11 +50,11 @@ public class Sort {
         }
     }
 
-    public static <T extends Comparable> void mergeSort(T[] a) {
+    public static <T extends Comparable<T>> void mergeSort(T[] a) {
         mSort(a, 0, a.length-1);
     }
 
-    private static <T extends Comparable> void mSort(T[] a, int begin, int end) {
+    private static <T extends Comparable<T>> void mSort(T[] a, int begin, int end) {
         if(begin < end) {
             int mid = (end - begin)/2 + begin;//防止溢出
             mSort(a, begin, mid);
@@ -63,7 +63,7 @@ public class Sort {
         }
     }
 
-    private static <T extends Comparable> void merge(T[] a, int begin, int mid, int end) {
+    private static <T extends Comparable<T>> void merge(T[] a, int begin, int mid, int end) {
         List<T> temp = new ArrayList<T>();
         int i = begin, j = mid + 1;
 
@@ -88,11 +88,11 @@ public class Sort {
         }
     }
 
-    public static <T extends Comparable> void qucikSort(T[] a) {
+    public static <T extends Comparable<T>> void qucikSort(T[] a) {
         qSort(a, 0, a.length - 1);
     }
 
-    public static <T extends Comparable> void qSort(T[] a, int begin, int end) {
+    public static <T extends Comparable<T>> void qSort(T[] a, int begin, int end) {
 
         if (begin >= end) return;
 
@@ -126,7 +126,7 @@ public class Sort {
      * 此版本存在性能问题，即数组存在大量重复元素时也会不断划分，造成不公平的切分
      * 但比较简短，适合面试时书写
      */
-    public static <T extends Comparable> void qSort2(T[] a, int begin, int end) {
+    public static <T extends Comparable<T>> void qSort2(T[] a, int begin, int end) {
         int i, m;  //i指向下一个待处理的元素，[begin+1, m]位置保存着当前已处理元素之中所有的小于a[begin]的元素
         T temp;
         if (begin >= end) return;
@@ -148,5 +148,42 @@ public class Sort {
 
         qSort(a, begin, m - 1);
         qSort(a, m + 1, end);
+    }
+
+    public static <T extends Comparable<T>> void heapSort(T[] a) {
+        T temp;
+        buildMaxHeap(a);
+
+        for (int i = a.length - 1; i > 0; i--) {
+            temp = a[i];
+            a[i] = a[0];
+            a[0] = temp;
+            maxHeapify(a, 0, i);
+        }
+    }
+
+    private static <T extends Comparable<T>> void buildMaxHeap(T[] a){
+        for (int i = (a.length - 1) / 2; i >= 0; i--) {
+            maxHeapify(a, i, a.length);
+        }
+    }
+
+    private static <T extends Comparable<T>> void maxHeapify(T[] a, int i, int heapSize) {
+        int left, right, largest;
+        T temp;
+        for(;;) {
+            left = 2 * i + 1;
+            right = 2 * i + 2;
+            largest = (left < heapSize && a[left].compareTo(a[i]) > 0) ? left : i;
+            if (right < heapSize && a[right].compareTo(a[largest]) > 0) {
+                largest = right;
+            }
+
+            if(largest == i) return;
+
+            temp = a[i];
+            a[i] = a[largest];
+            a[largest] = temp;
+        }
     }
 }
