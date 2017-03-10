@@ -1,6 +1,8 @@
 package husama;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -185,5 +187,56 @@ public class Sort {
             a[i] = a[largest];
             a[largest] = temp;
         }
+    }
+
+    public static void radixSort(int[] a) {
+
+        if (a.length <= 1) return;
+
+        int[] temp = new int[a.length];
+        int[] count = new int[10];
+
+        int radix = 1;
+        int i, j, k;
+
+        int digit = maxDigit(a);
+
+        for (i = 0; i < digit; i++) {
+            for (j = 0; j < 10; j++) {
+                count[j] = 0;
+            }
+
+            for (j = 0; j < a.length; j++) {
+                k = (a[j] / radix) % 10;
+                count[k]++;
+            }
+            for (j = 1; j < 10; j++) {
+                count[j] += count[j - 1];
+            }
+
+            for (j = a.length - 1; j >= 0; j--) {
+                k = (a[j] / radix) % 10;
+                temp[count[k] - 1] = a[j];
+                count[k]--;
+            }
+            for (j = 0; j < a.length; j++) {
+
+                a[j] = temp[j];
+            }
+
+            radix *= 10;
+        }
+    }
+
+    public static int maxDigit(int[] a) {
+
+        int max = a[0];
+        for (int i = 0; i < a.length; i++) {
+            if(a[i] > max) {
+                max = a[i];
+            }
+        }
+
+        return (int)Math.log10((double)max)+1;
     }
 }

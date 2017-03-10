@@ -54,4 +54,14 @@ public class SortTest extends TestCase{
             System.out.print(integer+" ");
         }
     }
+
+
+    public void testRadix() {
+        int[] test = {99,123,4,9999999,145,32421};
+        System.out.println("Max Digit : "+Sort.maxDigit(test));
+        Sort.radixSort(test);
+        for(int i : test) {
+            System.out.print(i + " ");
+        }
+    }
 }
