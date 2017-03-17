@@ -1,4 +1,4 @@
-package husama.Sigleton;
+package husama.singleton;
 
 /**
  * Created by hu on 2017/3/6.

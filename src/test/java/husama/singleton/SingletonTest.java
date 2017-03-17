@@ -1,6 +1,6 @@
-package husama.Singleton;
+package husama.singleton;
 
-import husama.Sigleton.*;
+import husama.singleton.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
